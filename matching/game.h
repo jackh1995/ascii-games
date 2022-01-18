@@ -4,13 +4,14 @@
 #include "board.h"
 #include <cassert>
 
-// using a-z, supporting 26 * 2 cards
+// using A-Z, supporting 26 * 2 cards
 using namespace std;
 
 class Game {
 public:
     Game(int _height, int _width) {
         assert((_height * _width) % 2 == 0);
+        assert((_height * _width) <= 26 * 2);
 
         // Create a board
         board = new Board(_height, _width);
