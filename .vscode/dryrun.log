@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/jack/Desktop/ascii-games'
+make: Leaving directory `/Users/jack/Desktop/ascii-games'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+ 
