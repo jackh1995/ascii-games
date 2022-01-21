@@ -31,6 +31,9 @@ public:
         // Get the height and width of the standard screen
         getmaxyx(stdscr, stdscr_h, stdscr_w);
         
+        // Welcome message
+        game_title();
+        
         // Set the height and width of the menu window;
         gamewin_h = board->height + 2;
         gamewin_w = board->width + 2;
@@ -146,5 +149,20 @@ private:
             }
         }
         wrefresh(gamewin);
+    }
+
+    void game_title(void) {
+        int _y = stdscr_h/7, _x = stdscr_w/2 - 89/2;
+
+        mvprintw(_y, _x, "\n"); _y++;
+        mvprintw(_y, _x, "  __  __       _______ _____ _    _ _____ _   _  _____    _____          __  __ ______ \n"); _y++;
+        mvprintw(_y, _x, " |  \\/  |   /\\|__   __/ ____| |  | |_   _| \\ | |/ ____|  / ____|   /\\   |  \\/  |  ____|\n"); _y++;
+        mvprintw(_y, _x, " | \\  / |  /  \\  | | | |    | |__| | | | |  \\| | |  __  | |  __   /  \\  | \\  / | |__   \n"); _y++;
+        mvprintw(_y, _x, " | |\\/| | / /\\ \\ | | | |    |  __  | | | | . ` | | |_ | | | |_ | / /\\ \\ | |\\/| |  __|  \n"); _y++;
+        mvprintw(_y, _x, " | |  | |/ ____ \\| | | |____| |  | |_| |_| |\\  | |__| | | |__| |/ ____ \\| |  | | |____ \n"); _y++;
+        mvprintw(_y, _x, " |_|  |_/_/    \\_\\_|  \\_____|_|  |_|_____|_| \\_|\\_____|  \\_____/_/    \\_\\_|  |_|______|\n"); _y++;
+        mvprintw(_y, _x, "\n");
+
+        refresh();
     }
 };
