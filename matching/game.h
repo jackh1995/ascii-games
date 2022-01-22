@@ -8,7 +8,9 @@
 using namespace std;
 
 class Game {
+
 public:
+
     Game(int _height, int _width) : n_trial(0) {
         
         assert((_height * _width) % 2 == 0);
@@ -17,16 +19,8 @@ public:
         // Create a board
         board = new Board(_height, _width);
         
-        // Configure ncursor 
-        initscr();
-        noecho();
-        cbreak();
-        curs_set(0);
-        
-        // Color setting
-        start_color();
-        init_pair(Card::REVEALED, COLOR_RED, COLOR_BLACK);
-        init_pair(Card::DONE, COLOR_GREEN, COLOR_BLACK);
+        config_ncursor();
+        config_color();
 
         // Get the height and width of the standard screen
         getmaxyx(stdscr, stdscr_h, stdscr_w);
@@ -34,6 +28,37 @@ public:
         // Welcome message
         game_title();
         
+        // Game window
+        config_gamewin();
+
+        // Score window
+        config_scorewin();
+        
+        // Set the current cursor position
+        cursor_y = 0;
+        cursor_x = 0;
+    }
+
+    ~Game() {
+        delete board;
+        endwin();
+    }
+
+    void config_ncursor() {
+        initscr();
+        noecho();
+        cbreak();
+        curs_set(0);
+    }
+    
+    void config_color() {
+        start_color();
+        init_pair(Card::REVEALED, COLOR_RED, COLOR_BLACK);
+        init_pair(Card::DONE, COLOR_GREEN, COLOR_BLACK);
+    }
+    
+    void config_gamewin() {
+
         // Set the height and width of the menu window;
         gamewin_h = board->height + 2;
         gamewin_w = board->width + 2;
@@ -42,17 +67,14 @@ public:
         gamewin_start_y = (stdscr_h - gamewin_h) / 2;
         gamewin_start_x = (stdscr_w - gamewin_w) / 2;
 
-        // Set the current cursor position
-        cursor_y = 0;
-        cursor_x = 0;
-        
         // Create a game window
         gamewin = newwin(gamewin_h, gamewin_w, gamewin_start_y, gamewin_start_x);
         box(gamewin, 0, 0);
         keypad(gamewin, true);
         refresh();
+    }
 
-        // TODO create score win
+    void config_scorewin() {
         int scorewin_h = 5; 
         int scorewin_w = 20;
         int scorewin_start_y = gamewin_start_y;
@@ -60,20 +82,86 @@ public:
         scorewin = newwin(scorewin_h, scorewin_w, scorewin_start_y, scorewin_start_x);
         box(scorewin, 0, 0);
         refresh();
-    }
+    }    
+    
+    
+    int menu() {
 
-    ~Game() {
-        delete board;
-        endwin();
+        int menuwin_h = 6; 
+        int menuwin_w = 13;
+        int menuwin_start_y = (stdscr_h - menuwin_h) / 2;
+        int menuwin_start_x = (stdscr_w - menuwin_w) / 2;
+        menuwin = newwin(menuwin_h, menuwin_w, menuwin_start_y, menuwin_start_x);
+        box(menuwin, 0, 0);
+        keypad(menuwin, true);
+
+        string choices[] = {
+            "PLAY", 
+            "MULTIPLAYER",
+            "HOW TO PLAY",
+            "QUIT"
+        };
+        
+        int n_choices = sizeof(choices) / sizeof(*choices);
+
+        int highlight = 0;
+        while (true) {
+            for (int i=0; i!=n_choices; ++i) {
+                if (i == highlight) {
+                    wattron(menuwin, A_REVERSE);
+                }
+
+                mvwprintw(menuwin, i+1, 1, choices[i].c_str());
+
+                if (i == highlight) {
+                    wattroff(menuwin, A_REVERSE);
+                }
+            }
+
+            key_hit = wgetch(menuwin);
+
+            switch (key_hit) {
+                case KEY_UP:
+                    if (highlight > 0)
+                        --highlight;
+                    break;
+                case KEY_DOWN:
+                    if (highlight < n_choices-1)
+                        ++highlight;
+                    break;
+                // Press enter
+                case 10:
+                    return highlight;
+                    break;
+                default:
+                    break;
+            }
+
+            wrefresh(menuwin);
+            refresh();
+        }        
     }
     
     void start() {
+
+        int choice;
         
-        // TODO init score
-        while (true) {
-            print_board();
-            print_score();
-            update_board();
+        choice = menu();
+
+        switch (choice) {
+            case 0: case 1:
+                wclear(menuwin);
+                wrefresh(menuwin);
+                while (true) {
+                    print_board();
+                    print_score();
+                    update_board();
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                return;
         }
     }
 
@@ -87,14 +175,17 @@ private:
     }
     
     Board* board;
+    WINDOW* menuwin;
     WINDOW* gamewin;
     WINDOW* scorewin;
 
     int stdscr_h, stdscr_w;
+
     int gamewin_h;
     int gamewin_w;
     int gamewin_start_y;
     int gamewin_start_x;
+    
     int cursor_y;
     int cursor_x;
     int key_hit;
@@ -120,12 +211,11 @@ private:
                 if (cursor_x < board->width-1)
                     ++cursor_x;
                 break;
-            // press enter
+            // Press enter
             case 10:
                 if (board->n_peek == 2) {
                     board->fold();
                 }
-                
                 n_pre_peek = board->n_peek;
                 board->peek(cursor_y, cursor_x);
                 if (board->n_peek == 1 && board->n_peek > n_pre_peek) {

@@ -10,7 +10,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `all'.  Stop.
  
 
-# Make data base, printed on Sat Jan 22 02:54:47 2022
+# Make data base, printed on Sat Jan 22 11:25:45 2022
 
 # Variables
 
@@ -18,10 +18,6 @@ make: *** No rule to make target `all'.  Stop.
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
 ?F = $(notdir $?)
-# environment
-ELECTRON_NO_ATTACH_CONSOLE = 1
-# environment
-LC_CTYPE = UTF-8
 # environment
 VSCODE_LOG_NATIVE = false
 # automatic
@@ -49,9 +45,9 @@ INFOPATH = /opt/homebrew/share/info:
 # environment
 P9K_SSH = 0
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/k8/xfdmqpvs45n8jlgm1nz2251w0000gn/T/vscode-ipc-575f7690-38dc-4a4f-892e-6c569a3f3e00.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/k8/xfdmqpvs45n8jlgm1nz2251w0000gn/T/vscode-ipc-7ca283db-2df6-4a9f-b62f-8acfdea4bca0.sock
 # environment
-VSCODE_CWD = /Users/jack/Desktop/ascii-games
+VSCODE_CWD = /
 # environment
 GSETTINGS_SCHEMA_DIR = /opt/homebrew/Caskroom/miniconda/base/share/glib-2.0/schemas
 # environment
@@ -89,8 +85,6 @@ HOME = /Users/jack
 # default
 MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
 # environment
-VSCODE_CLI = 1
-# environment
 VSCODE_CODE_CACHE_PATH = /Users/jack/Library/Application Support/Code/CachedData/899d46d82c4c95423fb7e10e68eba52050e30ba3
 # environment
 LOGNAME = jack
@@ -108,24 +102,18 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 CONDA_DEFAULT_ENV = base
 # environment
 XPC_FLAGS = 0x0
-# environment
-COLORTERM = truecolor
 # default
 MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
 # environment
-LC_TERMINAL = iTerm2
-# environment
-SHLVL = 3
+SHLVL = 1
 # default
 MAKE_VERSION := 3.81
 # environment
 USER = jack
 # makefile
 .DEFAULT_GOAL := 
-# default
-MAKECMDGOALS := all
-# environment
-TERM_SESSION_ID = w0t0p0:90FEDD4B-0053-400A-A516-B308253CCF3F
 # environment
 LESS = -R
 # automatic
@@ -134,8 +122,6 @@ LESS = -R
 CONDA_SHLVL = 1
 # default
 MAKE_COMMAND := /Library/Developer/CommandLineTools/usr/bin/make
-# environment
-TERM_PROGRAM = iTerm.app
 # default
 .VARIABLES := 
 # environment
@@ -151,11 +137,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-TERM_PROGRAM_VERSION = 3.4.14
-# environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.47323816.47323822.45467997-787B-40EF-A663-81EB719D7BC6
-# environment
-LC_TERMINAL_VERSION = 3.4.14
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.47323816.47323822
 # environment
 HOMEBREW_PREFIX = /opt/homebrew
 # automatic
@@ -165,11 +147,7 @@ HOMEBREW_PREFIX = /opt/homebrew
 # environment
 GSETTINGS_SCHEMA_DIR_CONDA_BACKUP = 
 # environment
-ITERM_SESSION_ID = w0t0p0:90FEDD4B-0053-400A-A516-B308253CCF3F
-# environment
 HOMEBREW_REPOSITORY = /opt/homebrew
-# environment
-COLORFGBG = 7;0
 # environment
 __CF_USER_TEXT_ENCODING = 0x1F5:0x0:0x0
 # environment
@@ -179,15 +157,11 @@ MAKEFILES :=
 # automatic
 <F = $(notdir $<)
 # environment
-ITERM_PROFILE = Default
-# environment
 PAGER = less
 # environment
 LC_ALL = C
 # environment
 CONDA_PYTHON_EXE = /opt/homebrew/Caskroom/miniconda/base/bin/python
-# environment
-P9K_TTY = old
 # automatic
 ^F = $(notdir $^)
 # default
@@ -199,17 +173,13 @@ MAKELEVEL := 0
 # environment
 CONDA_PREFIX = /opt/homebrew/Caskroom/miniconda/base
 # environment
-TERM = xterm-256color
-# environment
-_P9K_TTY = /dev/ttys000
-# environment
 VSCODE_PID = 80846
 # environment
 _CE_CONDA = 
 # environment
 LANG = C
 # variable set hash-table stats:
-# Load=97/1024=9%, Rehash=0, Collisions=5/117=4%
+# Load=82/1024=8%, Rehash=0, Collisions=2/102=2%
 
 # Pattern-specific Variable Values
 
@@ -217,14 +187,13 @@ LANG = C
 
 # Directories
 
-# . (device 16777232, inode 49206793): 6 files, no impossibilities.
+# . (device 16777232, inode 49206793): 7 files, no impossibilities.
 
-# 6 files, no impossibilities in 1 directories.
+# 7 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
 # No implicit rules.
- 
 
 # Files
 
@@ -292,6 +261,6 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Sat Jan 22 02:54:47 2022
+# Finished Make data base on Sat Jan 22 11:25:45 2022
 
  
