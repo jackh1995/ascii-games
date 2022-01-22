@@ -11,9 +11,6 @@ public:
     enum Status {UNREVEALED, REVEALED, DONE};
     Card() : status(UNREVEALED), symbol(0) {}
     Card(char _symbol) : status(UNREVEALED), symbol(_symbol) {}
-    void set_symbol(char c) {
-        symbol = c;
-    }
     const Status get_status() const {
         return status;
     }
@@ -32,14 +29,20 @@ private:
 class Board {
 public:
     Board(int _height, int _width) : n_peek(0), pre_idx(-1), height(_height), width(_width), n_done(0), n_card(_height * _width) {
-        char symbol('A');
-        for (int idx=0; idx!=n_card/2; ++idx) {
-            cards.push_back(Card(symbol));
-            cards.push_back(Card(symbol));
-            ++symbol;
+        
+        // 33 to 126, supporting 94 symbols
+        vector<char> ascii_printables;
+        for (int i=33; i<=126; i++) {
+            ascii_printables.push_back(i);
         }
-        // FIXME
+
         default_random_engine rng;
+        std::shuffle(begin(ascii_printables), end(ascii_printables), rng);
+        
+        for (int idx=0; idx!=n_card/2; ++idx) {
+            cards.push_back(Card(ascii_printables[idx]));
+            cards.push_back(Card(ascii_printables[idx]));
+        }
         std::shuffle(begin(cards), end(cards), rng);
     }
 

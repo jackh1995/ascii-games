@@ -4,7 +4,6 @@
 #include "board.h"
 #include <cassert>
 
-// using A-Z, supporting 26 * 2 cards
 using namespace std;
 
 class Game {
@@ -14,7 +13,7 @@ public:
     Game(int _height, int _width) : n_trial(0) {
         
         assert((_height * _width) % 2 == 0);
-        assert((_height * _width) <= 26 * 2);
+        assert((_height * _width) <= 94);
 
         // Create a board
         board = new Board(_height, _width);
@@ -245,7 +244,7 @@ private:
                     wattroff(gamewin, COLOR_PAIR(Card::REVEALED));
                     break;
                 case Card::UNREVEALED:
-                    wprintw(gamewin, "?");
+                    wprintw(gamewin, "X");
                     break;
                 case Card::DONE:
                     wattron(gamewin, COLOR_PAIR(Card::DONE));
@@ -266,7 +265,6 @@ private:
         wrefresh(gamewin);
     }
 
-    // TODO add some cool color
     void game_title(void) {
         int _y = stdscr_h/7, _x = stdscr_w/2 - 89/2;
 
