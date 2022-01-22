@@ -87,7 +87,7 @@ public:
     
     int menu() {
 
-        int menuwin_h = 6; 
+        int menuwin_h = 5; 
         int menuwin_w = 13;
         int menuwin_start_y = (stdscr_h - menuwin_h) / 2;
         int menuwin_start_x = (stdscr_w - menuwin_w) / 2;
@@ -98,7 +98,6 @@ public:
         string choices[] = {
             "PLAY", 
             "MULTIPLAYER",
-            "HOW TO PLAY",
             "QUIT"
         };
         
@@ -159,8 +158,6 @@ public:
                 }
                 break;
             case 2:
-                break;
-            case 3:
                 return;
         }
     }
