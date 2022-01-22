@@ -9,7 +9,7 @@ using namespace std;
 
 class Game {
 public:
-    Game(int _height, int _width) {
+    Game(int _height, int _width) : n_trial(0) {
         
         assert((_height * _width) % 2 == 0);
         assert((_height * _width) <= 26 * 2);
@@ -51,23 +51,44 @@ public:
         box(gamewin, 0, 0);
         keypad(gamewin, true);
         refresh();
+
+        // TODO create score win
+        int scorewin_h = 5; 
+        int scorewin_w = 20;
+        int scorewin_start_y = gamewin_start_y;
+        int scorewin_start_x = gamewin_start_x + 15;
+        scorewin = newwin(scorewin_h, scorewin_w, scorewin_start_y, scorewin_start_x);
+        box(scorewin, 0, 0);
+        refresh();
     }
 
     ~Game() {
         delete board;
         endwin();
     }
-
+    
     void start() {
+        
+        // TODO init score
         while (true) {
             print_board();
+            print_score();
             update_board();
         }
     }
 
 private:
+
+    void print_score() {
+        mvwprintw(scorewin, 1, 1, "Trials: %2d", n_trial);
+        mvwprintw(scorewin, 2, 1, "Opened: %2d/%2d", board->n_done, board->n_card/2);
+        mvwprintw(scorewin, 3, 1, "Left:   %2d/%2d", board->n_card/2 - board->n_done, board->n_card/2);
+        wrefresh(scorewin);
+    }
+    
     Board* board;
     WINDOW* gamewin;
+    WINDOW* scorewin;
 
     int stdscr_h, stdscr_w;
     int gamewin_h;
@@ -77,10 +98,11 @@ private:
     int cursor_y;
     int cursor_x;
     int key_hit;
+    int n_trial;
 
     void update_board() {
         key_hit = wgetch(gamewin);
-
+        int n_pre_peek(0);
         switch (key_hit) {
             case KEY_UP:
                 if (cursor_y > 0)
@@ -98,17 +120,23 @@ private:
                 if (cursor_x < board->width-1)
                     ++cursor_x;
                 break;
+            // press enter
             case 10:
-                if (board->n_peak == 2) {
+                if (board->n_peek == 2) {
                     board->fold();
                 }
-                board->peak(cursor_y, cursor_x);
+                
+                n_pre_peek = board->n_peek;
+                board->peek(cursor_y, cursor_x);
+                if (board->n_peek == 1 && board->n_peek > n_pre_peek) {
+                    ++n_trial;
+                }
                 break;
             default:
                 break;
         }
     }
-    
+
     void print_board() {
         int y(1);
         wmove(gamewin, y, 1);
@@ -151,6 +179,7 @@ private:
         wrefresh(gamewin);
     }
 
+    // TODO add some cool color
     void game_title(void) {
         int _y = stdscr_h/7, _x = stdscr_w/2 - 89/2;
 
